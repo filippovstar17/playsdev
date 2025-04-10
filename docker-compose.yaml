@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/html:/usr/share/nginx/html
+      - ./nginx/sites:/etc/nginx/conf.d
+      - ./nginx/load_modules.conf:/etc/nginx/load_modules.conf
+#      - ./redblue-server:/redblue
+    networks:
+      - nginx-net
+
+  apache:
+    image: php:8.2-apache
+    volumes:
+      - ./nginx/html/info.php:/var/www/html/info.php
+    networks:
+      - nginx-net
+
+  second-server:
+    image: nginx:alpine
+    volumes:
+      - ./nginx/html/secondserver.html:/usr/share/nginx/html/index.html
+    networks:
+      - nginx-net
+
+  red-server:
+    image: nginx:alpine
+    ports:
+      - "8081:80"
+    volumes:
+      - ./redblue-server/red:/usr/share/nginx/html
+
+  blue-server:
+    image: nginx:alpine
+    ports:
+      - "8082:80"
+    volumes:
+      - ./redblue-server/blue:/usr/share/nginx/html
+
+networks:
+  nginx-net:

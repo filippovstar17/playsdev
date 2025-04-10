@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>NGINX Прокси Сервер</title>
+</head>
+<body>
+    <h1>Добро пожаловать на NGINX Прокси Сервер</h1>
+    
+    <h2>Основные ссылки:</h2>
+    <ul>
+        <li><a href="/secondpage">Перейти на вторую страницу</a></li>
+        <li><a href="/music" download>Скачать музыку (MP3)</a></li>
+    </ul>
+
+    <h2>Информация о серверах:</h2>
+    <ul>
+        <li><a href="/info.php">Информация о PHP</a></li>
+        <li><a href="/secondserver">Ответ от второго сервера</a></li>
+    </ul>
+
+    <h2>Специальные функции:</h2>
+    <ul>
+        <li><a href="/redblue">Чередование красной/синей страницы</a></li>
+        <li><a href="/image1">Просмотр JPG изображения</a> (перевернутое)</li>
+        <li><a href="/image2">Просмотр PNG изображения</a></li>
+    </ul>
+
+    <div>
+        <h3>Загрузка CPU:</h3>
+        <p id="cpu-load">Измерение...</p>
+    </div>
+
+    <script>
+        function updateCpuLoad() {
+            fetch('/cpu-load')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('cpu-load').textContent = 'Текущая загрузка CPU: ' + data + '%';
+                });
+        }
+        setInterval(updateCpuLoad, 1000);
+    </script>
+</body>
+</html>
