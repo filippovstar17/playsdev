@@ -10,7 +10,6 @@ services:
       - ./nginx/html:/usr/share/nginx/html
       - ./nginx/sites:/etc/nginx/conf.d
       - ./nginx/load_modules.conf:/etc/nginx/load_modules.conf
-#      - ./redblue-server:/redblue
     networks:
       - nginx-net
 
@@ -30,17 +29,18 @@ services:
 
   red-server:
     image: nginx:alpine
-    ports:
-      - "8081:80"
     volumes:
       - ./redblue-server/red:/usr/share/nginx/html
+    networks:
+      - nginx-net
 
   blue-server:
     image: nginx:alpine
-    ports:
-      - "8082:80"
     volumes:
       - ./redblue-server/blue:/usr/share/nginx/html
+    networks:
+      - nginx-net
 
 networks:
   nginx-net:
+    driver: bridge
